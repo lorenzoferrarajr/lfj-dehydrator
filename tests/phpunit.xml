@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="bootstrap.php" backupGlobals="true" processIsolation="false">
+    <testsuites>
+        <testsuite name="LfjDehydrator">
+            <file>LfjDehydratorTest/Dehydrator/DehydratorTest.php</file>
+            <file>LfjDehydratorTest/Plugin/PluginTest.php</file>
+            <file>LfjDehydratorTest/Content/ContentTest.php</file>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <blacklist>
+            <directory>../vendor</directory>
+            <directory>../tests</directory>
+        </blacklist>
+    </filter>
+</phpunit>
