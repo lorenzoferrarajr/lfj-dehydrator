@@ -1,6 +1,6 @@
 {
     "name": "lorenzoferrarajr/lfj-dehydrator",
-    "description": "Dehydrator is a tool to speed-up development of data extraction from text using PHP",
+    "description": "LfjDehydrator is a tool to speed-up development of data extraction from text using PHP",
     "type": "library",
     "keywords": [
         "library","scraper","dom","json","library","php"
