@@ -82,6 +82,8 @@ class Dehydrator
             if ($plugin instanceof ReplaceablePluginInterface) {
                 $this->getResult()->offsetSet($pluginKey, $pluginResult);
             } else {
+                if (!is_array($pluginResult)) $pluginResult = array($pluginResult);
+
                 if ($this->getResult()->offsetExists($pluginKey)) {
                     $this->getResult()->offsetSet($pluginKey, array_merge($this->getResult()->offsetGet($pluginKey), $pluginResult));
                 } else {
