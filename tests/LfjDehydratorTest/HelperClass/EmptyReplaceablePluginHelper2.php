@@ -6,7 +6,7 @@ use Lfj\Dehydrator\Plugin\AbstractPlugin;
 use Lfj\Dehydrator\Plugin\PluginInterface;
 use Lfj\Dehydrator\Plugin\ReplaceablePluginInterface;
 
-class EmptyReplaceablePluginHelper extends AbstractPlugin implements PluginInterface, ReplaceablePluginInterface
+class EmptyReplaceablePluginHelper2 extends AbstractPlugin implements PluginInterface, ReplaceablePluginInterface
 {
     public function isEnabled() { }
     public function getKey() { }
