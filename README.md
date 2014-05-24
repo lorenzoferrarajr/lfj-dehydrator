@@ -18,7 +18,7 @@ Usage
 ----
 To illustrate the basic usage please refer to the following code:
     
-```
+```php
 <?php
 
 use Lfj\Dehydrator\Dehydrator;
@@ -63,25 +63,6 @@ array(
 )
 ```
 
-If both the plugins, or just the last one added using `::addPlugin()`, implement the `Lfj\Dehydrator\Plugin\ReplaceablePluginInterface` interface, assuming that the `og:title` related plugin is added least, the result will not get appended but replaced. The final result will be:
-    
-```php
-array(
-    'title' => array(
-           1 => 'title from og:title'
-    )
-)
-```
-
-or, if the result of the plugin is not an array but a scalar value:
-
-```php
-array(
-    'title' => 'title from og:title'
-)
-```
-
-
 Below, an example plugin that extracts the title of a YouTube video from a YouTube URL:
 
 ```php
@@ -91,9 +72,8 @@ namespace MyDehydratorPlugin;
 
 use Lfj\Dehydrator\Plugin\AbstractPlugin;
 use Lfj\Dehydrator\Plugin\PluginInterface;
-use Lfj\Dehydrator\Plugin\ReplaceablePluginInterface;
 
-class YouTubeTitlePlugin extends AbstractPlugin implements PluginInterface, ReplaceablePluginInterface
+class YouTubeTitlePlugin extends AbstractPlugin implements PluginInterface
 {
     public function getKey()
     {
@@ -125,4 +105,39 @@ class YouTubeTitlePlugin extends AbstractPlugin implements PluginInterface, Repl
         return false;
     }
 }
+```
+
+Adding Plugins
+---
+
+The `Dehydrator::addPlugin` method accepts as a second argument a plugin type expressed as a string. Currently two types of plugins are supported: `replaceable` and `null` (for non replaceable).
+
+Results of plugins added as `replaceable` replace results of plugins having the same `key`. This means that if two plugins are extracting the title of a page and are returning the same key, if added as non replaceable the result will be something like:
+
+```php
+ArrayIterator Object
+(
+    [storage:ArrayIterator:private] => Array
+        (
+            [title] => Array
+                (
+                    [0] => Chaplin Modern Times - Factory Scene (HD - 720p)
+                    [1] => Chaplin Modern Times - Factory Scene (HD - 720p)
+                )
+
+        )
+)
+```
+
+if added as `replaceable` the result of the second plugin will replace the result of the first:
+
+```php
+ArrayIterator Object
+(
+    [storage:ArrayIterator:private] => Array
+        (
+            [title] => Chaplin Modern Times - Factory Scene (HD - 720p)
+        )
+
+)
 ```
