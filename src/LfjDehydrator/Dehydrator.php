@@ -31,14 +31,12 @@ class Dehydrator
      * @param string $plugin
      * @return boolean
      */
-    public function addPlugin($plugin)
+    public function addPlugin($plugin, $type = null)
     {
-        $result = false;
-
         try {
             $pluginReflection = new \ReflectionClass($plugin);
             if ($pluginReflection->implementsInterface('Lfj\Dehydrator\Plugin\PluginInterface')) {
-                $this->plugins->append($plugin);
+                $this->plugins->append(array('plugin' => $plugin, 'type' => $type));
                 $result = true;
             }
         } catch (\Exception $e) {
@@ -57,9 +55,11 @@ class Dehydrator
      */
     public function dehydrate(UriInterface $url, ContentInterface $content)
     {
-        foreach ($this->plugins as $plugin) {
-            $plugin = new $plugin($url, $content);
-            $this->runPlugin($plugin);
+        foreach ($this->plugins as $p) {
+            $plugin = new $p['plugin'];
+            $plugin->setContent($content);
+            $plugin->setUrl($url);
+            $this->runPlugin($plugin, $p['type']);
         }
 
         return $this;
@@ -71,7 +71,7 @@ class Dehydrator
      *
      * @param PluginInterface $plugin
      */
-    public function runPlugin(PluginInterface $plugin)
+    public function runPlugin(PluginInterface $plugin, $type)
     {
         if ($plugin->isEnabled()) {
             $plugin->run();
@@ -79,7 +79,7 @@ class Dehydrator
             $pluginKey = $plugin->getKey();
             $pluginResult = $plugin->getResult();
 
-            if ($plugin instanceof ReplaceablePluginInterface) {
+            if ('replaceable' == $type) {
                 $this->getResult()->offsetSet($pluginKey, $pluginResult);
             } else {
                 if (!is_array($pluginResult)) $pluginResult = array($pluginResult);

@@ -14,12 +14,33 @@ use Zend\Uri\UriInterface;
 
 interface PluginInterface
 {
-    public function __construct(UriInterface $url, ContentInterface $content);
+    public function __construct();
     public function isEnabled();
     public function getKey();
     public function setResult($result);
     public function getResult();
+
+    /**
+     * @param UriInterface $url
+     * @return $this
+     */
+    public function setUrl(UriInterface $url);
+
+    /**
+     * @return UriInterface
+     */
     public function getUrl();
+
+    /**
+     * @param ContentInterface $content
+     * @return $this
+     */
+    public function setContent(ContentInterface $content);
+
+    /**
+     * @return ContentInterface
+     */
     public function getContent();
+
     public function run();
 }

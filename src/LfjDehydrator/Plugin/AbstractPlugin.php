@@ -24,16 +24,23 @@ abstract class AbstractPlugin
     protected $url;
 
     /**
-     * Create a new Plugin object.
-     *
-     * @param UriInterface $url
-     * @param null $content
+     * Create a new Plugin object
      */
-    public function __construct(UriInterface $url, ContentInterface $content)
+    public function __construct()
     {
-        $this->url = $url;
-        $this->content = $content;
+        $this->url = null;
+        $this->content = null;
         $this->result = array();
+    }
+
+    /**
+     * @param ContentInterface $content
+     * @return $this
+     */
+    public function setContent(ContentInterface $content)
+    {
+        $this->content = $content;
+        return $this;
     }
 
     /**
@@ -42,6 +49,16 @@ abstract class AbstractPlugin
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @param UriInterface $url
+     * @return $this
+     */
+    public function setUrl(UriInterface $url)
+    {
+        $this->url = $url;
+        return $this;
     }
 
     /**
