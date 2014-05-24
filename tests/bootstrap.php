@@ -9,8 +9,4 @@ include "../vendor/autoload.php";
  */
 
 include 'LfjDehydratorTest/HelperClass/PluginHelper.php';
-include 'LfjDehydratorTest/HelperClass/EmptyReplaceablePluginHelper1.php';
-include 'LfjDehydratorTest/HelperClass/EmptyReplaceablePluginHelper2.php';
 include 'LfjDehydratorTest/HelperClass/EmptyPluginHelper.php';
-include 'LfjDehydratorTest/HelperClass/ReplaceablePluginHelper1.php';
-include 'LfjDehydratorTest/HelperClass/ReplaceablePluginHelper2.php';

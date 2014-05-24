@@ -114,7 +114,10 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
         $result = $property->getValue($dehydrator);
 
         $expected = array(
-            get_class($plugin2)
+            array(
+                'plugin' => get_class($plugin2),
+                'type' => null
+            )
         );
 
         $this->assertEquals($expected, $result->getArrayCopy());
@@ -156,7 +159,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $dehydrator = new Dehydrator();
 
-        $dehydrator->runPlugin($plugin1);
+        $dehydrator->runPlugin($plugin1, null);
 
         $expected = new \ArrayIterator();
         $expected->offsetSet('test-plugin', array('result'));
@@ -187,7 +190,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
             ->method('getResult')
             ->will($this->returnValue(array('result')));
 
-        $dehydrator->runPlugin($plugin2);
+        $dehydrator->runPlugin($plugin2, null);
 
         $expected = new \ArrayIterator();
         $expected->offsetSet('test-plugin', array('result', 'result'));
@@ -198,7 +201,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
          * mock and check plugin3
          */
 
-        $plugin3 = $this->getMockBuilder('LfjDehydratorTest\HelperClass\EmptyReplaceablePluginHelper1')
+        $plugin3 = $this->getMockBuilder('LfjDehydratorTest\HelperClass\PluginHelper')
             ->setMethods(array('getKey', 'isEnabled', 'run', 'getResult'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -218,7 +221,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
             ->method('getResult')
             ->will($this->returnValue(array('result')));
 
-        $dehydrator->runPlugin($plugin3);
+        $dehydrator->runPlugin($plugin3, 'replaceable');
 
         $expected->offsetSet('test-plugin-replaceable', array('result'));
 
@@ -228,7 +231,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
          * mock and check plugin4
          */
 
-        $plugin4 = $this->getMockBuilder('LfjDehydratorTest\HelperClass\EmptyReplaceablePluginHelper2')
+        $plugin4 = $this->getMockBuilder('LfjDehydratorTest\HelperClass\PluginHelper')
             ->setMethods(array('getKey', 'isEnabled', 'run', 'getResult'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -248,7 +251,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
             ->method('getResult')
             ->will($this->returnValue(array('result')));
 
-        $dehydrator->runPlugin($plugin4);
+        $dehydrator->runPlugin($plugin4, 'replaceable');
 
         $this->assertEquals($expected, $dehydrator->getResult());
     }
@@ -283,7 +286,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('LfjDehydratorTest\HelperClass\PluginHelper', 'test-plugin', array('result')),
-            array('LfjDehydratorTest\HelperClass\ReplaceablePluginHelper1', 'test-plugin-replaceable', array('result')),
+            array('LfjDehydratorTest\HelperClass\PluginHelper', 'test-plugin', array('result')),
         );
     }
 
@@ -335,13 +338,13 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
         $content = new Content('');
 
         $dehydrator = new Dehydrator();
-        $dehydrator->addPlugin('LfjDehydratorTest\HelperClass\ReplaceablePluginHelper1');
-        $dehydrator->addPlugin('LfjDehydratorTest\HelperClass\ReplaceablePluginHelper2');
+        $dehydrator->addPlugin('LfjDehydratorTest\HelperClass\PluginHelper', 'replaceable');
+        $dehydrator->addPlugin('LfjDehydratorTest\HelperClass\PluginHelper', 'replaceable');
 
         $result = $dehydrator->dehydrate($url, $content)->getResult();
 
         $expected = new \ArrayIterator();
-        $expected->offsetSet('test-plugin-replaceable', array('result'));
+        $expected->offsetSet('test-plugin', array('result'));
 
         $this->assertEquals($expected, $result);
     }
