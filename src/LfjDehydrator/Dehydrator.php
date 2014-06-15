@@ -11,7 +11,6 @@ namespace Lfj\Dehydrator;
 
 use Lfj\Dehydrator\Content\ContentInterface;
 use Lfj\Dehydrator\Plugin\PluginInterface;
-use Lfj\Dehydrator\Plugin\ReplaceablePluginInterface;
 use Zend\Uri\UriInterface;
 
 class Dehydrator
