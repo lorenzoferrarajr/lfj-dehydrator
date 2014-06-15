@@ -21,8 +21,8 @@ class Dehydrator
 
     public function __construct()
     {
-        $this->plugins = new \ArrayIterator();
-        $this->result  = new \ArrayIterator();
+        $this->plugins = array();
+        $this->result  = array();
     }
 
     /**
@@ -37,7 +37,7 @@ class Dehydrator
         try {
             $pluginReflection = new \ReflectionClass($plugin);
             if ($pluginReflection->implementsInterface('Lfj\Dehydrator\Plugin\PluginInterface')) {
-                $this->plugins->append(array('plugin' => $plugin, 'type' => $type));
+                $this->plugins[] = array('plugin' => $plugin, 'type' => $type);
                 $result = true;
             }
         } catch (\Exception $e) {
@@ -82,21 +82,21 @@ class Dehydrator
             $pluginResult = $plugin->getResult();
 
             if ('replaceable' == $type) {
-                $this->getResult()->offsetSet($pluginKey, $pluginResult);
+                $this->result[$pluginKey] = $pluginResult;
             } else {
                 if (!is_array($pluginResult)) $pluginResult = array($pluginResult);
 
-                if ($this->getResult()->offsetExists($pluginKey)) {
-                    $this->getResult()->offsetSet($pluginKey, array_merge($this->getResult()->offsetGet($pluginKey), $pluginResult));
+                if (isset($this->result[$pluginKey])) {
+                    $this->result[$pluginKey] = array_merge($this->result[$pluginKey], $pluginResult);
                 } else {
-                    $this->getResult()->offsetSet($pluginKey, $pluginResult);
+                    $this->result[$pluginKey] = $pluginResult;
                 }
             }
         }
     }
 
     /**
-     * @return \ArrayIterator
+     * @return array
      */
     public function getResult()
     {

@@ -25,7 +25,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $result = $property->getValue($dehydrator);
 
-        $this->assertInstanceOf('ArrayIterator', $result);
+        $this->assertEquals(array(), $result);
     }
 
     /**
@@ -45,7 +45,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $result = $property->getValue($dehydrator);
 
-        $this->assertInstanceOf('ArrayIterator', $result);
+        $this->assertEquals(array(), $result);
     }
 
     /**
@@ -59,7 +59,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
          * check if ::getResult() returns the same object
          */
 
-        $expected = new \ArrayIterator();
+        $expected = array();
 
         $dehydrator = new Dehydrator();
 
@@ -71,7 +71,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $result = $dehydrator->getResult();
 
-        $this->assertSame($expected, $result);
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -120,7 +120,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $this->assertEquals($expected, $result->getArrayCopy());
+        $this->assertEquals($expected, $result);
     }
 
     /**
@@ -161,8 +161,8 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $dehydrator->runPlugin($plugin1, null);
 
-        $expected = new \ArrayIterator();
-        $expected->offsetSet('test-plugin', array('result'));
+        $expected = array();
+        $expected['test-plugin'] = array('result');
 
         $this->assertEquals($expected, $dehydrator->getResult());
 
@@ -192,8 +192,8 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $dehydrator->runPlugin($plugin2, null);
 
-        $expected = new \ArrayIterator();
-        $expected->offsetSet('test-plugin', array('result', 'result'));
+        $expected = array();
+        $expected['test-plugin'] = array('result', 'result');
 
         $this->assertEquals($expected, $dehydrator->getResult());
 
@@ -223,7 +223,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $dehydrator->runPlugin($plugin3, 'replaceable');
 
-        $expected->offsetSet('test-plugin-replaceable', array('result'));
+        $expected['test-plugin-replaceable'] = array('result');
 
         $this->assertEquals($expected, $dehydrator->getResult());
 
@@ -269,7 +269,7 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
          * check if the result is correct
          */
 
-        $expected = new \ArrayIterator();
+        $expected = array();
 
         $url = New Uri('http://example.com/');
         $content = new Content('');
@@ -314,8 +314,8 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $result = $dehydrator->dehydrate($url, $content)->getResult();
 
-        $expected = new \ArrayIterator();
-        $expected->offsetSet($expectedKey, $expectedValue);
+        $expected = array();
+        $expected[$expectedKey] = $expectedValue;
 
         $this->assertEquals($expected, $result);
     }
@@ -343,8 +343,8 @@ class LfjDehydratorTest extends \PHPUnit_Framework_TestCase
 
         $result = $dehydrator->dehydrate($url, $content)->getResult();
 
-        $expected = new \ArrayIterator();
-        $expected->offsetSet('test-plugin', array('result'));
+        $expected = array();
+        $expected['test-plugin'] = array('result');
 
         $this->assertEquals($expected, $result);
     }
