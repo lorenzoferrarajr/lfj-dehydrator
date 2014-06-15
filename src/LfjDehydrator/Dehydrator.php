@@ -29,6 +29,7 @@ class Dehydrator
      * Add a plugin. Plugins must be added using full
      *
      * @param string $plugin
+     * @param string $type Use "replaceable" or anything else
      * @return boolean
      */
     public function addPlugin($plugin, $type = null)
@@ -51,7 +52,7 @@ class Dehydrator
      *
      * @param UriInterface $url
      * @param ContentInterface $content
-     * @return \ArrayIterator
+     * @return self
      */
     public function dehydrate(UriInterface $url, ContentInterface $content)
     {
@@ -70,6 +71,7 @@ class Dehydrator
      *
      *
      * @param PluginInterface $plugin
+     * @param string $type Use "replaceable" or anything else
      */
     public function runPlugin(PluginInterface $plugin, $type)
     {
