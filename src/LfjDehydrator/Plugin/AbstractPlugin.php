@@ -2,7 +2,7 @@
 /**
  * Lfj\Dehydrator
  *
- * @link      http://github.com/lorenzoferrarajr/dehydrator
+ * @link      https://github.com/lorenzoferrarajr/lfj-dehydrator
  * @copyright 2014 Lorenzo Ferrara Junior
  * @license   ../LICENSE.TXT BSD-3-Clause
  */
@@ -30,12 +30,12 @@ abstract class AbstractPlugin
     {
         $this->url = null;
         $this->content = null;
-        $this->result = array();
+        $this->result = null;
     }
 
     /**
      * @param ContentInterface $content
-     * @return $this
+     * @return self
      */
     public function setContent(ContentInterface $content)
     {
@@ -53,7 +53,7 @@ abstract class AbstractPlugin
 
     /**
      * @param UriInterface $url
-     * @return $this
+     * @return self
      */
     public function setUrl(UriInterface $url)
     {
@@ -69,12 +69,19 @@ abstract class AbstractPlugin
         return $this->url;
     }
 
+    /**
+     * @param mixed $result
+     * @return self
+     */
     public function setResult($result)
     {
         $this->result = $result;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getResult()
     {
         return $this->result;

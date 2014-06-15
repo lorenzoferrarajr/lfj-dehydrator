@@ -2,7 +2,7 @@
 /**
  * Lfj\Dehydrator
  *
- * @link      http://github.com/lorenzoferrarajr/dehydrator
+ * @link      https://github.com/lorenzoferrarajr/lfj-dehydrator
  * @copyright 2014 Lorenzo Ferrara Junior
  * @license   ../LICENSE.TXT BSD-3-Clause
  */
@@ -67,7 +67,6 @@ class Dehydrator
 
     /**
      * Checks if a plugin is enabled, runs the plugin and saves the result
-     *
      *
      * @param PluginInterface $plugin
      * @param string $type Use "replaceable" or anything else

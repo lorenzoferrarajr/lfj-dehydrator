@@ -2,7 +2,7 @@
 /**
  * Lfj\Dehydrator
  *
- * @link      http://github.com/lorenzoferrarajr/dehydrator
+ * @link      https://github.com/lorenzoferrarajr/lfj-dehydrator
  * @copyright 2014 Lorenzo Ferrara Junior
  * @license   ../LICENSE.TXT BSD-3-Clause
  */
@@ -22,7 +22,7 @@ interface PluginInterface
 
     /**
      * @param UriInterface $url
-     * @return $this
+     * @return self
      */
     public function setUrl(UriInterface $url);
 
@@ -33,7 +33,7 @@ interface PluginInterface
 
     /**
      * @param ContentInterface $content
-     * @return $this
+     * @return self
      */
     public function setContent(ContentInterface $content);
 

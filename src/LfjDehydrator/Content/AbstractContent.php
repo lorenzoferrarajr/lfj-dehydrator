@@ -2,7 +2,7 @@
 /**
  * Lfj\Dehydrator
  *
- * @link      http://github.com/lorenzoferrarajr/dehydrator
+ * @link      https://github.com/lorenzoferrarajr/lfj-dehydrator
  * @copyright 2014 Lorenzo Ferrara Junior
  * @license   ../LICENSE.TXT BSD-3-Clause
  */
@@ -10,7 +10,7 @@
 namespace Lfj\Dehydrator\Content;
 
 /**
- * @property string $content
+ * @property string $string
  */
 class AbstractContent
 {
